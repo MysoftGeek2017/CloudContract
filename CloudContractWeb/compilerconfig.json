@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "static/Test/create-template.css",
+    "inputFile": "static/Test/create-template.less"
+  },
+  {
+    "outputFile": "static/Test/template_list.css",
+    "inputFile": "static/Test/template_list.less"
+  }
+]

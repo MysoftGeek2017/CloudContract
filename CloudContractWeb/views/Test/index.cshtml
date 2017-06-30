@@ -1,0 +1,49 @@
+﻿@{
+    Layout = null;
+}
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title></title>
+    <script src="~/static/3rd/jquery-1.9.1.js" type="text/javascript"></script>
+
+    <link href="~/static/3rd/Office.css" rel="stylesheet" type="text/css" />
+    <script src="https://appsforoffice.microsoft.com/lib/beta/hosted/office.js" type="text/javascript"></script>
+
+    <!-- 要允许使用 Office.js 的本地引用进行脱机调试，请使用:                        -->
+    <!-- <script src="../../Scripts/Office/MicrosoftAjax.js" type="text/javascript"></script>  -->
+    <!-- <script src="../../Scripts/Office/1/office.js" type="text/javascript"></script>  -->
+
+    <link href="~/static/App.css" rel="stylesheet" type="text/css" />
+    <script src="~/static/App.js" type="text/javascript"></script>
+
+    <link href="~/static/Test/Test.css" rel="stylesheet" type="text/css" />
+    <script src="~/static/Test/Test.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="content-header">
+        <div class="padding">
+            <h1>欢迎, @(Context.User?.Identity?.Name) </h1>
+        </div>
+    </div>
+    <div id="content-main">
+        <div class="padding">
+            <p><strong>在此处添加主屏幕内容。</strong></p>
+            <p>例如:</p>
+            @*<button id="get-data-from-selection">从所选内容中获取数据</button>
+            <button id="get-all-data">读取文档全部内容Base64</button>*@
+            
+
+            <button id="get-all-data2">读取文档全部内容OoXml</button>
+            <button id="set-data">在末尾增加读取的OoXml</button>
+
+            <p style="margin-top: 50px;">
+                <a href="create-template.aspx">创建模板</a>
+                <a href="template-list.aspx">选择模板</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

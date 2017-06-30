@@ -1,0 +1,833 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ClownFish.HttpServer</name>
+    </assembly>
+    <members>
+        <member name="T:ClownFish.HttpServer.Attributes.FromBodyAttribute">
+            <summary>
+            当请求体以JSON/XML传递数据时，且Action有多个参数申明，
+            可用 [FromBody] 标记哪个参数值从整体请求体中的JSON/XML反序列化得到参数值，
+            没有标记 [FromBody] 的参数将尝试从查询字符串或者HTTP上下文中获取数据。
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Attributes.FromRequestAttribute">
+            <summary>
+            从HttpRequest的属性中获取某个值
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Common.TypeExtensions.IsCommonValueType(System.Type)">
+            <summary>
+            判断指定的类型是不是常见的值类型，范围：DateTime，Guid，decimal， Enum
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Common.TypeExtensions.GetRealType(System.Type)">
+            <summary>
+            得到一个实际的类型（排除Nullable类型的影响）。比如：int? 最后将得到int
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Common.TypeExtensions.IsTaskMethod(System.Reflection.MethodInfo)">
+            <summary>
+            判断是不是一个 Task 方法
+            </summary>
+            <param name="method"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Common.TypeExtensions.GetTaskMethodResultType(System.Reflection.MethodInfo)">
+            <summary>
+            检查是不是Task&lt;T&gt;方法，如果是，则返回类型参数T，否则返回 null
+            </summary>
+            <param name="method"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ClownFish.HttpServer.Common.ParameterResolver">
+            <summary>
+            用于执行Action时，构造方法参数的解析器
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Common.ParameterResolver.GetParameters(System.Reflection.MethodInfo,ClownFish.HttpServer.Web.HttpRequest)">
+            <summary>
+            从HttpRequest中构造将要调用的方法的所有参数值
+            </summary>
+            <param name="method"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Common.ParameterResolver.GetParameter(System.Reflection.ParameterInfo,ClownFish.HttpServer.Web.HttpRequest)">
+            <summary>
+            从HttpRequest中构造一个参数值
+            </summary>
+            <param name="p"></param>
+            <param name="requst"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Common.ParameterResolver.FromRequestPropertyGetValue(System.Reflection.ParameterInfo,ClownFish.HttpServer.Web.HttpRequest)">
+            <summary>
+            从HttpRequest对象中获取某个属性，属性的名称就是参数的名称
+            </summary>
+            <param name="p"></param>
+            <param name="requst"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Common.ParameterResolver.FromBodyDeserializeObject(System.Reflection.ParameterInfo,ClownFish.HttpServer.Web.HttpRequest)">
+            <summary>
+            从请求流中反序列化构造参数值
+            </summary>
+            <param name="p"></param>
+            <param name="requst"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ClownFish.HttpServer.Common.StringConverter">
+            <summary>
+            将字符串转换成其它类型的转换器
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Common.StringConverter.ToObject(System.String,System.Type)">
+            <summary>
+            将字符串转换成指定的数据类型
+            </summary>
+            <param name="value"></param>
+            <param name="conversionType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Common.StringConverter.IsSupportableType(System.Type)">
+            <summary>
+            判断是否是一个可支持的参数类型。仅包括：基元类型，string ，decimal，DateTime，Guid, string[], 枚举
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Common.StringConverter.DefaultChangeType(System.String,System.Type)">
+            <summary>
+            调用.NET的默认实现，将字符串转换成指定的数据类型。
+            </summary>
+            <param name="value"></param>
+            <param name="conversionType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Common.StringConverter.GetStringImplicit(System.Type)">
+            <summary>
+            判断指定的类型是否能从String类型做隐式类型转换，如果可以，则返回相应的方法
+            </summary>
+            <param name="conversionType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Routing.RouteHelper.CreateRegex(System.String)">
+            <summary>
+            将包含了占位符模式的字符串翻译成等效的正则表达式
+            </summary>
+            <param name="pattern"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ClownFish.HttpServer.Routing.RouteAttribute">
+            <summary>
+            标记可用于响应某个URL的HTTP处理器，
+            例如：[Route("/api/ns/class/{action}.aspx")]
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Routing.RouteAttribute.#ctor">
+            <summary>
+            构造方法
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Routing.RouteAttribute.#ctor(System.String)">
+            <summary>
+            构造方法
+            </summary>
+            <param name="url">必须是“占位符”风格的URL</param>
+        </member>
+        <member name="P:ClownFish.HttpServer.Routing.RouteAttribute.Url">
+            <summary>
+            在类型上标记，要匹配的 URL 前缀部分
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Routing.RouteAttribute.Regex">
+            <summary>
+            如果指定的URL属性，就生成一个正则表达式用于匹配
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Routing.RouteActionAttribute">
+            <summary>
+            标记可用于响应某个URL的HTTP处理器，与[Route("...")]配套使用
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Routing.RouteActionAttribute.Name">
+            <summary>
+            在类型上标记，要匹配的 URL 前缀部分，
+            例如：
+            类型上标记： [Route("/api/ns/class/{action}.aspx")]
+            方法上标记： [RouteAction(Name = "New-Guid")]
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Routing.RouteIgnoreAttribute">
+            <summary>
+            标记某个方法不用于HTTP请求
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Routing.RouteMatchExistException">
+            <summary>
+            用于在匹配过程中快速结束整个查找过程
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Routing.RoutingObject">
+            <summary>
+            表示每个路由描述信息，可用于在匹配成功后获取IHttpHandler实例
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Routing.RoutingHandler">
+            <summary>
+            对应[RouteUrl("......")]标记HttpHandler类型
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Routing.RoutingAction">
+            <summary>
+            对应[RouteUrl("...固定URL...")]标记方法
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Routing.RoutingService">
+            <summary>
+            对应[Route(".....")]标记的类型
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Routing.RoutingService.Method">
+            <summary>
+            注意：此属性仅在匹配成功后，克隆对象并赋值
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Routing.RouteUrlAttribute">
+            <summary>
+            标记可用于响应某个URL的HTTP处理器
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Routing.RouteUrlAttribute.#ctor(System.String)">
+            <summary>
+            构造方法
+            </summary>
+            <param name="url"></param>
+        </member>
+        <member name="M:ClownFish.HttpServer.Routing.RouteUrlAttribute.#ctor(System.String,ClownFish.HttpServer.Routing.UrlType)">
+            <summary>
+            构造方法
+            </summary>
+            <param name="url"></param>
+            <param name="type"></param>
+        </member>
+        <member name="P:ClownFish.HttpServer.Routing.RouteUrlAttribute.Url">
+            <summary>
+            标记某个方法可以处理哪个URL，
+            例如：
+            类型上标记： [Route]
+            方法上标记： [RouteUrl("/inner-test.aspx")]
+            方法上标记： [RouteUrl(@"/page/{id}/{year}-{month}-{day}.aspx")]
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Routing.RouteUrlAttribute.UrlType">
+            <summary>
+            Url属性值的类别
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Routing.RouteUrlAttribute.Regex">
+            <summary>
+            如果不是固定URL，就生成一个正则表达式用于匹配
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Routing.UrlType">
+            <summary>
+            路由描述中的URL类别
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Routing.UrlType.FixUrl">
+            <summary>
+            固定的URL
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Routing.UrlType.Pattern">
+            <summary>
+            带有占位符的URL模式
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Routing.UrlType.Regex">
+            <summary>
+            正则表达式的URL模式
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Routing.RoutingManager._urlDict">
+            <summary>
+            直接可以做URL映射查找的字典表
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Routing.RoutingManager._regexList">
+            <summary>
+            需要做正则比较的路由规则表
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Handlers.ErrorHandler">
+            <summary>
+            执行请求发生异常时的处理器类型，
+            可重写这个类型中的ProcessRequest方法实现自己的异常处理方式
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Handlers.ErrorHandler.Exception">
+            <summary>
+            当时已发生的异常
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Handlers.ErrorHandler.ProcessRequest(ClownFish.HttpServer.Web.HttpContext)">
+            <summary>
+            重写基类方法，处理异常的请求
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:ClownFish.HttpServer.InvalidCodeException">
+            <summary>
+            表示错误的代码异常
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.InvalidCodeException.#ctor(System.String)">
+            <summary>
+            使用指定的错误信息初始化 InvalidCodeException 类的新实例。
+            </summary>
+            <param name="message">解释异常原因的错误信息。</param>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.HttpApplicationEndRequestException">
+            <summary>
+            用于 跳过 HTTP 执行管线链中的所有事件和筛选并直接执行 EndRequest 事件。
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpApplicationFactory.Recycle(ClownFish.HttpServer.Web.HttpApplication)">
+            <summary>
+            回收HttpApplication实例
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.HttpHandlerFactory">
+            <summary>
+            创建 HttpHandler 的工厂类型
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Web.HttpHandlerFactory.Instance">
+            <summary>
+            静态单例对象
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpHandlerFactory.CreateHandler(ClownFish.HttpServer.Web.HttpContext)">
+            <summary>
+            创建一个可处理HttpContext请求的HttpHandler实例
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.HttpModule">
+            <summary>
+            类似 ASP.NET 中的 IHttpModule，允许以事件的方式进入请求的处理过程
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.BeginRequest">
+            <summary>
+            响应请求时作为 HTTP 执行管线链中的第一个事件发生。
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.AuthenticateRequest">
+            <summary>
+            当安全模块已建立用户标识时发生。
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.PostAuthenticateRequest">
+            <summary>
+            当安全模块已建立用户标识时发生。
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.AuthorizeRequest">
+            <summary>
+            当安全模块已验证用户授权时发生。
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.PostAuthorizeRequest">
+            <summary>
+            当安全模块已验证用户授权时发生。
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.PreMapRequestHandle">
+            <summary>
+            将当前请求映射到相应的事件处理程序时发生。
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.PostMapRequestHandle">
+            <summary>
+            将当前请求映射到相应的事件处理程序时发生。
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.PreRequestHandlerExecute">
+            <summary>
+            开始执行事件处理程序前发生。
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.PostRequestHandlerExecute">
+            <summary>
+            在事件处理程序执行完毕时发生。
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.PreSendRequestHeaders">
+            <summary>
+            在向客户端发送内容之前发生。
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.PostSendRequestHeaders">
+            <summary>
+            在向客户端发送内容之后发生。
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.EndRequest">
+            <summary>
+            请求时作为 HTTP 执行管线链中的最后一个事件发生。
+            </summary>
+        </member>
+        <member name="E:ClownFish.HttpServer.Web.HttpModule.Error">
+            <summary>
+            当引发未处理的异常时发生。
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.HttpApplication">
+            <summary>
+            表示用于执行HTTP请求的任务过程
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpApplication.Context">
+            <summary>
+            HttpContext实例
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpApplication.RegisterModule(System.Type)">
+            <summary>
+            注册HttpModule
+            </summary>
+            <param name="moduleType"></param>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpApplication.CompleteRequest">
+            <summary>
+            跳过 HTTP 执行管线链中的所有事件和筛选并直接执行 EndRequest 事件。
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpApplication.ProcessRequest(System.Object)">
+            <summary>
+            处理HTTP请求（入口方法）
+            </summary>
+            <param name="xxx"></param>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.IHttpHandler">
+            <summary>
+            定义用于处理HTTP语法的接口
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.IHttpHandler.ProcessRequest(ClownFish.HttpServer.Web.HttpContext)">
+            <summary>
+            处理HTTP请求
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.IHttpHandler2">
+            <summary>
+            增强版本的IHttpHandler，更适合MVC的设计思路
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.IHttpHandler2.ProcessRequest2(ClownFish.HttpServer.Web.HttpContext)">
+            <summary>
+            处理HTTP请求，
+            仅获取Action的执行结果，不包含输出过程。
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.HttpContext">
+            <summary>
+            用于封装请求执行过程中的重要数据对象
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpContext.OriginalContext">
+            <summary>
+            HttpListenerContext实例
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpContext.Request">
+            <summary>
+            用于操作Request的对象
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpContext.Response">
+            <summary>
+            用于操作Response的对象
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpContext.HttpHandler">
+            <summary>
+            用于响应当前请求的HttpHandler实例
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpContext.LastException">
+            <summary>
+            最近一次产生的异常对象
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpContext.ClearLastException">
+            <summary>
+            清除最近产生的异常对象
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpContext.RemapHandler(ClownFish.HttpServer.Web.IHttpHandler2)">
+            <summary>
+            为当前请求指定一个处理器，调用后将会跳过路由查找过程。
+            </summary>
+            <param name="handler"></param>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpContext.Items">
+            <summary>
+            存放一些与请求相关的临时数据
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpContext.Dispose">
+            <summary>
+            实现 IDispose 接口
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.HttpRequest">
+            <summary>
+            用于封装HttpListenerRequest的读取操作，提供与HttpRequest类似的访问API
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpRequest.#ctor">
+            <summary>
+            构造方法
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpRequest.HttpMethod">
+            <summary>
+            获取由客户端指定的 HTTP 方法。 
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpRequest.QueryString">
+            <summary>
+            获取查询字符串参数
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpRequest.Path">
+            <summary>
+            当前请求的路径（不含查询字符串部分）
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpRequest.Item(System.String)">
+            <summary>
+            根据指定的名称，尝试从QueryString, Form, Headers获取对应的值
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpRequest.GetRouteValue(System.String)">
+            <summary>
+            获取URL路由匹配中获取的参数
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpRequest.Headers">
+            <summary>
+            获取请求头参数
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpRequest.Form">
+            <summary>
+            获取当前请求的表单数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpRequest.GetPostText">
+            <summary>
+            获取当前请求的请求体内容， 通常用于获取 JSON，XML 文本
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpRequest.ContentType">
+            <summary>
+            获取包含在请求中的正文数据的 MIME 类型。
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.IRequireHttpContext">
+            <summary>
+            指示某个类型需要包含一个HttpContext实例，
+            实现这个接口的HTTP处理类型（Service/Controller），框架将会自动给HttpContext属性赋值。
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.IRequireHttpContext.HttpContext">
+            <summary>
+            一个HttpContext实例。
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.RequestDataType">
+            <summary>
+            请求体中的数据格式
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Web.RequestDataType.NoSet">
+            <summary>
+            未指定
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Web.RequestDataType.Form">
+            <summary>
+            表单形式的数据
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Web.RequestDataType.Json">
+            <summary>
+            JSON格式数据
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Web.RequestDataType.Xml">
+            <summary>
+            XML格式数据
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Web.RequestDataType.Unknown">
+            <summary>
+            未知的数据格式
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.ResponseContentType">
+            <summary>
+            返回内容的 MIME 类型
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Web.ResponseContentType.Text">
+            <summary>
+            表示以普通文本形式响应
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Web.ResponseContentType.Json">
+            <summary>
+            表示以JSON形式响应
+            </summary>
+        </member>
+        <member name="F:ClownFish.HttpServer.Web.ResponseContentType.Html">
+            <summary>
+            表示以HTML形式响应
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.HttpResponse">
+            <summary>
+            用于封装HttpListenerResponse对象的写操作，提供与HttpResponse类似的API
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpResponse.#ctor">
+            <summary>
+            构造方法
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpResponse.StatusCode">
+            <summary>
+            获取或设置返回给客户端的 HTTP 状态代码。
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Web.HttpResponse.ContentType">
+            <summary>
+            获取或设置返回内容的 MIME 类型。 
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpResponse.Write(System.String)">
+            <summary>
+            将指定的文本写入HTTP响应流
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpResponse.SetBasicHeaders">
+            <summary>
+            设置基本的请求头（HTTP200， text/plain ， 允许跨域访问）
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpResponse.SendRequestHeaders">
+            <summary>
+            发送执行过程中产生的请求头
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.HttpResponse.Dispose">
+            <summary>
+            实现 IDispose 接口
+            </summary>
+        </member>
+        <member name="T:ClownFish.HttpServer.Web.ServiceHandler">
+            <summary>
+            实现IHttpHandler接口，用于执行某个服务方法
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.ServiceHandler.ProcessRequest(ClownFish.HttpServer.Web.HttpContext)">
+            <summary>
+            处理HTTP请求的入口方法
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:ClownFish.HttpServer.Web.ServiceHandler.ProcessRequest2(ClownFish.HttpServer.Web.HttpContext)">
+            <summary>
+            处理HTTP请求的入口方法
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ClownFish.HttpServer.Result.ResultConvert">
+            <summary>
+            用于将一个非IActionResult类型对象转换成IActionResult类型的转换器实现，
+            可以继承此类型来实现个性化的定制转换过程。
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Result.ResultConvert.Convert(System.Object,ClownFish.HttpServer.Web.HttpContext)">
+            <summary>
+            将一个对象转换成IActionResult实例
+            </summary>
+            <param name="value"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Result.ResultConvert.ConvertString(System.Object)">
+            <summary>
+            将一个字符串转换成IActionResult实例（默认采用TextResult类型）
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Result.ResultConvert.ConvertDateTime(System.Object)">
+            <summary>
+            将一个DateTime转换成IActionResult实例（默认采用TextResult类型）
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Result.ResultConvert.ConvertValue(System.Object)">
+            <summary>
+            将.NET内置的值类型对象转换成IActionResult实例（默认采用TextResult类型），覆盖类型：
+            基元类型： Boolean、Byte、SByte、Int16、UInt16、Int32、UInt32、Int64、UInt64、IntPtr、UIntPtr、Char、Double 和 Single。
+            以及结构体： Guid，decimal， Enum
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.Result.ResultConvert.ConvertObject(System.Object,ClownFish.HttpServer.Web.HttpContext)">
+            <summary>
+            将一个对象转换成IActionResult实例（默认采用JsonResult类型）
+            </summary>
+            <param name="value"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ClownFish.HttpServer.Result.IActionResult">
+            <summary>
+            表示Action结果的接口
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Result.IActionResult.Ouput(ClownFish.HttpServer.Web.HttpContext)">
+            <summary>
+            执行输出操作
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:ClownFish.HttpServer.Result.JsonResult">
+            <summary>
+            表示Action的执行结果为JSON
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Result.JsonResult.Model">
+            <summary>
+            需要以JSON形式输出的数据对象
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Result.JsonResult.#ctor(System.Object)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="model">将要序列化的对象</param>
+        </member>
+        <member name="T:ClownFish.HttpServer.Result.TextResult">
+            <summary>
+            表示一个纯文本Action的返回结果
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Result.TextResult.Model">
+            <summary>
+            需要输出的数据对象
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.Result.TextResult.ContentType">
+            <summary>
+            需要设置的 ContentType 标头
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.Result.TextResult.#ctor(System.Object)">
+            <summary>
+            构造方法
+            </summary>
+            <param name="model">需要输出的数据对象</param>
+        </member>
+        <member name="M:ClownFish.HttpServer.Result.TextResult.#ctor(System.Object,System.String)">
+            <summary>
+            构造方法
+            </summary>
+            <param name="model">需要输出的数据对象</param>
+            <param name="contentType">需要设置的 ContentType 标头</param>
+        </member>
+        <member name="T:ClownFish.HttpServer.ServerOptions">
+            <summary>
+            表示当前监听服务运行的参数信息
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.ServerOptions.Create">
+            <summary>
+            创建一个ServerOptions实例
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.ServerOptions.AddListenerAddress(System.String,System.String,System.Int32)">
+            <summary>
+            增加一个监听地址
+            </summary>
+            <param name="protocol">协议名称， http or https</param>
+            <param name="ip">要监听的IP地址，要监听本机所有IP，可以指定星号 * </param>
+            <param name="port">要监听的TCP端口</param>
+            <returns></returns>
+        </member>
+        <member name="M:ClownFish.HttpServer.ServerOptions.LoadServiceAssemblies(System.Reflection.Assembly[])">
+            <summary>
+            注册可以处理HTTP请求的程序集
+            </summary>
+            <param name="assemblies"></param>
+        </member>
+        <member name="T:ClownFish.HttpServer.ServerHost">
+            <summary>
+            用于监听HTTP请求的服务器类型
+            </summary>
+        </member>
+        <member name="P:ClownFish.HttpServer.ServerHost.IsListening">
+            <summary>
+            获取一个值，指示 HttpListener 是否已启动。
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.ServerHost.Run(ClownFish.HttpServer.ServerOptions)">
+            <summary>
+            启动HTTP请求监听
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.ServerHost.Start">
+            <summary>
+            继续监听请求（仅在Stop后调用）
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.ServerHost.Stop">
+            <summary>
+            暂停监听请求（然后调用Start可继续监听）
+            </summary>
+        </member>
+        <member name="M:ClownFish.HttpServer.ServerHost.Dispose">
+            <summary>
+            关闭 HttpListener
+            </summary>
+        </member>
+    </members>
+</doc>
