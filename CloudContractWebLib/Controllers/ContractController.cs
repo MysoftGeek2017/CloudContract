@@ -13,44 +13,68 @@ namespace CloudContractWebLib.Controllers
     public class ContractController : BaseController
     {
 
-        [PageUrl(Url = "/contract/create.aspx")]
-        public IActionResult Create(Guid templateGuid)
-        {
-            return new PageResult("~/views/Contract/edit.cshtml", new
-            {
-                ContractGuid = Guid.Empty,
-                TemplateGuid = templateGuid,
-            });
-        }
-        /// <summary>
-        /// 合同列表
-        /// </summary>
-        [PageUrl(Url = "/contract/get-contracts.aspx")]
-        [Action(OutFormat = SerializeFormat.Json, Verb = "POST")]
-        public List<Contract> GetList()
-        {
-            using (var scope = ConnectionScope.GetExistOrCreate())
-            {
-                return CPQuery.Create(@"
+		[PageUrl(Url = "/contract/create.aspx")]
+		public IActionResult Create(Guid templateGuid)
+		{
+			return new PageResult("~/views/Contract/edit.cshtml", new {
+				ContractGuid = Guid.Empty,
+				TemplateGuid = templateGuid,
+			});
+		}
+
+		[PageUrl(Url = "/contract/edit.aspx")]
+		public IActionResult Edit(Guid contractGuid)
+		{
+			return new PageResult("~/views/Contract/edit.cshtml", new {
+				ContractGuid = contractGuid,
+			});
+		}
+
+		/// <summary>
+		/// 合同列表
+		/// </summary>
+		[PageUrl(Url = "/contract/get-contracts.aspx")]
+		[Action(OutFormat = SerializeFormat.Json, Verb = "POST")]
+		public List<Contract> GetList()
+		{
+			using( var scope = ConnectionScope.GetExistOrCreate() ) {
+				return CPQuery.Create(@"
 SELECT  ContractGUID ,
         ContractName ,
         ContractTemplateGUID
 FROM    [dbo].[Geek_Contract]
 WHERE   ApproveStatus IS NULL
         OR ApproveStatus = '不通过'").ToList<Contract>();
-            }
-        }
+			}
+		}
 
-        /// <summary>
-        /// 合同保存
-        /// </summary>
-        [PageUrl(Url = "/contract-save.aspx")]
-        [Action(Verb = "POST")]
-        public void Save(Contract contract)
-        {
-            // 入参校验
-            if (contract == null)
-                throw new ArgumentNullException(nameof(contract));
+
+		/// <summary>
+		/// 读取单个合同
+		/// </summary>
+		[PageUrl(Url = "/contract/get-contract.aspx")]
+		[Action(OutFormat = SerializeFormat.Json, Verb = "POST")]
+		public Contract GetContract(Guid contractGuid)
+		{
+			using( var scope = ConnectionScope.GetExistOrCreate() ) {
+				return CPQuery.Create(@"
+SELECT  *
+FROM    [dbo].[Geek_Contract]
+WHERE   ContractGUID=@ContractGUID", new { ContractGUID = contractGuid }).ToSingle<Contract>();
+			}
+		}
+
+
+		/// <summary>
+		/// 合同保存
+		/// </summary>
+		[PageUrl(Url = "/contract/save.aspx")]
+		[Action(Verb = "POST")]
+		public void Save(Contract contract)
+		{
+			// 入参校验
+			if( contract == null )
+				throw new ArgumentNullException(nameof(contract));
 
             string sql;
 

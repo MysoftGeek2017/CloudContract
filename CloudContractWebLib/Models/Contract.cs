@@ -6,7 +6,7 @@ namespace CloudContractWebLib.Models
     /// 合同
     /// </summary>
     [Serializable]
-    public class Contract : BaseEntity
+    public class Contract
     {
         /// <summary>
         /// 合同Guid
@@ -32,6 +32,12 @@ namespace CloudContractWebLib.Models
         /// 合同模板Guid
         /// </summary>
         public Guid ContractTemplateGUID { get; set; }
+
+		/// <summary>
+		/// 合同金额
+		/// </summary>
+		public decimal ContractAmount { get; set; }
+
         /// <summary>
         /// 合同内容
         /// </summary>

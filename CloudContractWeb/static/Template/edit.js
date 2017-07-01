@@ -101,6 +101,7 @@
 			var contentControl = range.insertContentControl();
 			contentControl.placeholderText = "点击此处录入" + fieldText;
 			contentControl.tag = fieldname;
+			contentControl.title = fieldText;
 
 			return context.sync().then(function () {
 				console.log('插入字段' + fieldText);
