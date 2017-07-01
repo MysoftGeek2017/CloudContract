@@ -78,3 +78,8 @@
 	text-decoration: none;
 }
 
+.panel-primary>.panel-heading {
+  color: #fff;
+  background-color: #2a8dd4;
+  border-color: #337ab7;
+}

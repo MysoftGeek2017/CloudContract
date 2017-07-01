@@ -8,6 +8,8 @@
 		//loadContent();
 
 	    $("#field-list").on('click', '.list-group-item', insertPosition);
+	    $("#itemfield-list").on('click', '.list-group-item', insertPosition);
+
 		$("#btn-save").click(save);
 	    $("#btn-return").click(function() {
 	        app.setContent('');
