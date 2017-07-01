@@ -52,10 +52,10 @@
 	// 读取合同内容
 	function loadContract() {
 		var contractGuid = window._contractGuid;
-		$.post('/template/get-template.aspx',
-			{ templateGuid: templateGuid })
+		$.post('/contract/get-contract.aspx',
+			{ contractGuid: contractGuid })
 			.then(function (data) {
-				app.setContent(data.TemplateContent);
+				app.setContent(data.ContractContent);
 			})
 			.fail(function (error) {
 				var message = error.responseText;
@@ -106,9 +106,10 @@
 				var body = context.document.body;
 				var bodyXml = body.getOoxml();
 
-				data.Content = bodyXml;
 
 				return context.sync().then(function () {
+					data.ContractContent = bodyXml.value;
+
 					$.post("/contract/save.aspx", data)
 					.done(function () {
 						app.showNotification("保存成功！");
