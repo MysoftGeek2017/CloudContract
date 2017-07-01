@@ -7,7 +7,7 @@ namespace CloudContractWebLib.Controllers
     /// </summary>
     public class ContractController : BaseController
     {
-        [PageUrl(Url = "/contract/index.aspx")]
+        [PageUrl(Url = "/contract-index.aspx")]
         public IActionResult Index()
         {
             return new PageResult("~/views/Template/index.cshtml");
