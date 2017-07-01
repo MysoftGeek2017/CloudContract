@@ -1,1 +1,13 @@
-﻿
+﻿#field-list {
+  margin: 0;
+  padding: 0;
+}
+#field-list .list-group-item {
+  cursor: pointer;
+}
+#field-list .list-group-item:hover {
+  background-color: #8abbe5;
+}
+#content-footer .padding {
+  text-align: right;
+}

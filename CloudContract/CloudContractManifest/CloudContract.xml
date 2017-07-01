@@ -3,10 +3,10 @@
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TaskPaneApp">
   <Id>1887b194-7eac-4918-8329-bb68e0bae184</Id>
   <Version>1.0.0.0</Version>
-  <ProviderName>[提供商名称]</ProviderName>
+  <ProviderName>明源云</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="CloudContract" />
-  <Description DefaultValue="CloudContract"/>
+  <DisplayName DefaultValue="云合同" />
+  <Description DefaultValue="云合同"/>
   <Hosts>
     <Host Name="Document" />
   </Hosts>

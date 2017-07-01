@@ -17,8 +17,21 @@
     top: 80px; /* 值与 #content-header 的 height 相同 */
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 50px;
     overflow: auto; /* 启用主要内容部分中的滚动条 */
+}
+
+#content-footer {
+	position: absolute;
+	bottom: 0;
+    width: 100%;
+    height: 50px; /* 固定页眉高度 */
+    background: #2a8dd4;
+    overflow: hidden; /* 页眉禁用滚动条 */
+    color: #fff;
+}
+#content-footer .padding{
+	padding: 7px 15px;
 }
 
 .padding {
@@ -43,7 +56,7 @@
     }
 
     #notification-message #notification-message-close {
-        background-image: url("../Images/Close.png");
+        background-image: url("Images/Close.png");
         background-repeat: no-repeat;
         width: 24px;
         height: 24px;
