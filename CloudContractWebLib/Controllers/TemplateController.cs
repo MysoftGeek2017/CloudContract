@@ -120,9 +120,10 @@ SELECT  ContractTemplateGUID ,
         TemplateName,
         TemplateContent
 FROM    dbo.Geek_ContractTemplate
-").ToSingle<ContractTemplate>();
-            }
-        }
+WHERE ContractTemplateGUID=@templateGuid
+", new { templateGuid }).ToSingle<ContractTemplate>();
+			}
+		}
 
 
         [PageUrl(Url = "/template/get-fields.aspx")]
