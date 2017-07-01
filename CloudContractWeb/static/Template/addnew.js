@@ -18,25 +18,12 @@
             return;
         }
 
-        Word.run(function (context) {
-            var body = context.document.body;
-            var bodyXml = body.getOoxml();
-
-            return context.sync().then(function() {
-                $.post("/template-save.aspx",
-                    {
-                        Content: bodyXml.value,
-                        Name: name
-                    })
-                    .done(function() {
-                        app.showNotification("保存成功！");
-                    })
-                    .error(function(error) {
-                        app.showNotification("Error:", JSON.stringify(error));
-                    });
+        $.post("/template-save.aspx", { Name: name })
+            .done(function() {
+                app.showNotification("保存成功！");
+            })
+            .error(function(error) {
+                app.showNotification("Error:", JSON.stringify(error));
             });
-        }).catch(function (error) {
-            app.showNotification("Error:", JSON.stringify(error));
-        });
     }
 })();
