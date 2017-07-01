@@ -21,6 +21,15 @@ namespace CloudContractWebLib.Controllers
 				TemplateGuid = templateGuid,
 			});
 		}
+
+		[PageUrl(Url = "/contract/edit.aspx")]
+		public IActionResult Edit(Guid contractGuid)
+		{
+			return new PageResult("~/views/Contract/edit.cshtml", new {
+				ContractGuid = contractGuid,
+			});
+		}
+
 		/// <summary>
 		/// 合同列表
 		/// </summary>
@@ -39,10 +48,27 @@ WHERE   ApproveStatus IS NULL
 			}
 		}
 
+
+		/// <summary>
+		/// 读取单个合同
+		/// </summary>
+		[PageUrl(Url = "/contract/get-contract.aspx")]
+		[Action(OutFormat = SerializeFormat.Json, Verb = "POST")]
+		public Contract GetContract(Guid contractGuid)
+		{
+			using( var scope = ConnectionScope.GetExistOrCreate() ) {
+				return CPQuery.Create(@"
+SELECT  *
+FROM    [dbo].[Geek_Contract]
+WHERE   ContractGUID=@ContractGUID", new { ContractGUID = contractGuid }).ToSingle<Contract>();
+			}
+		}
+
+
 		/// <summary>
 		/// 合同保存
 		/// </summary>
-		[PageUrl(Url = "/contract-save.aspx")]
+		[PageUrl(Url = "/contract/save.aspx")]
 		[Action(Verb = "POST")]
 		public void Save(Contract contract)
 		{
