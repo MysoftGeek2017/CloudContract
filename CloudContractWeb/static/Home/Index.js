@@ -31,7 +31,7 @@
 
 		li.append($("<a/>")
 			.attr("href", "javascript:void 0")
-			.text(item));
+			.text(item.TemplateName));
 
 		return li;
 	}
