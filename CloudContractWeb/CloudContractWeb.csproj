@@ -128,7 +128,7 @@
     <Content Include="static\Test\template_list.min.css">
       <DependentUpon>template_list.css</DependentUpon>
     </Content>
-    <Content Include="views\Test\index.cshtml" />
+    <Content Include="views\Home\index.cshtml" />
     <Content Include="views\Test\create_template.cshtml" />
     <Content Include="static\Test\create-template.less" />
     <None Include="compilerconfig.json" />
@@ -385,8 +385,8 @@
     <None Include="static\3rd\_references.js" />
     <Content Include="static\App.css" />
     <Content Include="static\App.js" />
-    <Content Include="static\Test\Test.css" />
-    <Content Include="static\Test\Test.js" />
+    <Content Include="static\Home\Index.css" />
+    <Content Include="static\Home\Index.js" />
     <Content Include="static\3rd\Office.css" />
     <Content Include="static\3rd\OfficeThemes.css" />
     <Content Include="Web.config" />
@@ -402,8 +402,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="static\NewFolder1\" />
-    <Folder Include="views\NewFolder1\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

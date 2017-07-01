@@ -10,11 +10,6 @@ namespace DemoServiceLib.Controllers
 	public class TestController : BaseController
 	{
 
-		[PageUrl(Url = "/index.aspx")]
-		public IActionResult Index()
-		{
-			return new PageResult("~/views/Test/index.cshtml");
-		}
 
 		[PageUrl(Url = "/test.aspx")]
 		public string Test()
