@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using ClownFish.Web;
 
-namespace DemoServiceLib.Controllers
+namespace CloudContractWebLib.Controllers
 {
 	public class TestController : BaseController
 	{

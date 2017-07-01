@@ -137,6 +137,8 @@
     </None>
     <Content Include="views\Test\template_list.cshtml" />
     <Content Include="static\Test\template_list.less" />
+    <Content Include="views\Template\index.cshtml" />
+    <Content Include="views\Contract\index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -402,7 +404,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="static\Contract\" />
     <Folder Include="static\NewFolder1\" />
+    <Folder Include="static\Template\" />
     <Folder Include="views\NewFolder1\" />
   </ItemGroup>
   <PropertyGroup>
