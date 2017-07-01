@@ -8,11 +8,11 @@
         /// <summary>
         /// 模板名称
         /// </summary>
-        public string Name { get; set; }
+        public string TemplateName { get; set; }
 
         /// <summary>
         /// 模板内容
         /// </summary>
-        public string Content { get; set; }
+        public string TemplateContent { get; set; }
     }
 }

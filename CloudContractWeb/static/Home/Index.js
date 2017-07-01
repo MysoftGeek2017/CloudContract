@@ -52,7 +52,7 @@
 
 		var a = $("<span/>")
 			// .attr("href", "javascript:void 0")
-			.text(item);
+			.text(item.TemplateName);
 		
 		var toolbar = $("<span class='list-item-toolbar'/>");
 
