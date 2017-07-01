@@ -140,6 +140,8 @@ WHERE ContractTemplateGUID=@templateGuid
 SELECT  field_name_c Text,field_name Field
 FROM    dbo.data_dict
 WHERE   table_name = 'Geek_Contract'
+        AND field_name NOT IN ( 'ApproverGUID','ApproverName','ApproveStatus','ApproveTime', 'CreatedGUID', 'ContractTemplateGUID', 'ContractGUID', 'CreatedTime', 'CreatedName',
+                                'ContractContent', 'ModifiedGUID', 'ModifiedTime', 'ModifiedName', 'VersionNumber' )
 ORDER BY field_name
 
 ").ToList<FieldInfo>();

@@ -24,7 +24,7 @@ var app = (function () {
 		// 初始化后，请公开通用通知函数
 		app.showNotification = function (header, text) {
 			$('#notification-message-header').text(header);
-			$('#notification-message-body').text(text);
+			$('#notification-message-body').text(text || '');
 			$('#notification-message').slideDown('fast');
 		};
 

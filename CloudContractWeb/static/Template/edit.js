@@ -126,7 +126,17 @@
 					app.showNotification("保存成功！");
 				})
 				.error(function (error) {
-					app.showNotification("Error:", JSON.stringify(error));
+					var message = error.responseText;
+
+					if (message.indexOf("<title>") > -1) {
+						message = message.split("<title>")[1];
+					}
+
+					if (message.indexOf("</title>") > -1) {
+						message = message.split("</title>")[0];
+					}
+
+					app.showNotification("错误:", message);
 				});
 			})
 		}).catch(function (error) {
