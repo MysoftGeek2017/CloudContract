@@ -4,7 +4,9 @@
 	"use strict";
 
 	$(function () {
-		loadTemplates();
+	    loadTemplates();
+
+	    loadContracts();
 
 		$('#template-list').on('click', '.edit-button', editTemplate);
 		$('#template-list').on('click', '.create-contract', createContract);
@@ -70,4 +72,37 @@
 		li.append(a).append(toolbar);
 		return li;
 	}
+
+	function loadContracts() {
+	    $.post('/contract/get-contracts.aspx')
+			.then(function (data) {
+			    var ul = $('#contract-list');
+			    $.each(data, function (i, item) {
+			        ul.append(createContractItem(item));
+			    });
+			});
+	}
+
+	function createContractItem(item) {
+	    var li = $("<li/>")
+			.addClass('list-group-item')
+			.attr('data-id', item.ContractGUID);
+
+	    var a = $("<span/>")
+			// .attr("href", "javascript:void 0")
+			.text(item.ContractName);
+
+	    var toolbar = $("<span class='list-item-toolbar'/>");
+
+	    var a2 = $("<a/>")
+			.addClass('button edit-button')
+			.attr("href", "javascript:void 0")
+			.text('加载合同');
+
+	    toolbar.append(a2);
+	    li.append(a).append(toolbar);
+	    return li;
+	}
+
+
 })();
