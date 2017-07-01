@@ -2,10 +2,12 @@
 	"use strict";
 
 	$(function () {
-		loadFields();
+	    loadFields('/template/get-fields.aspx', 'field-list');
+
+	    loadFields('/template/get-itemfields.aspx', 'itemfield-list');
 		//loadContent();
 
-		$("#field-list").on('click', '.list-group-item', insertPosition)
+	    $("#field-list").on('click', '.list-group-item', insertPosition);
 		$("#btn-save").click(save);
 	    $("#btn-return").click(function() {
 	        app.setContent('');
@@ -47,10 +49,10 @@
 
 
 	// 读取模板字段
-	function loadFields() {
-		$.post('/template/get-fields.aspx')
+	function loadFields(url, divid) {
+		$.post(url)
 			.then(function (data) {
-				showFields(data);
+			    showFields(data, divid);
 			})
 			.fail(function (error) {
 				var message = error.responseText;
@@ -68,8 +70,8 @@
 	}
 
 	// 显示模板字段
-	function showFields(fieldList) {
-		var ul = $("#field-list");
+	function showFields(fieldList, divid) {
+	    var ul = $("#" + divid);
 
 		$.each(fieldList, function (i, item) {
 
@@ -94,21 +96,21 @@
 		var fieldname = $(target).closest('.list-group-item').attr('data-id');
 		var fieldText = $(target).closest('.list-group-item').text();
 
-		Word.run(function (context) {
-			var body = context.document.body;
-			var range = context.document.getSelection();
+	    Word.run(function(context) {
+	        var body = context.document.body;
+	        var range = context.document.getSelection();
 
-			var contentControl = range.insertContentControl();
-			contentControl.placeholderText = "点击此处录入" + fieldText;
-			contentControl.tag = fieldname;
-			contentControl.title = fieldText;
+	        var contentControl = range.insertContentControl();
+	        contentControl.placeholderText = "点击此处录入" + fieldText;
+	        contentControl.tag = fieldname;
+	        contentControl.title = fieldText;
 
-			return context.sync().then(function () {
-				console.log('插入字段' + fieldText);
-			})
-		}).catch(function (error) {
-			app.showNotification("Error:", JSON.stringify(error));
-		})
+	        return context.sync().then(function() {
+	            console.log('插入字段' + fieldText);
+	        });
+	    }).catch(function(error) {
+	        app.showNotification("Error:", JSON.stringify(error));
+	    });
 	}
 
 	function save() {
@@ -117,18 +119,19 @@
 			var body = context.document.body;
 			var bodyXml = body.getOoxml();
 
-			return context.sync().then(function () {
-				$.post("/template/update.aspx", {
-					TemplateContent: bodyXml.value,
-					ContractTemplateGUID: templateGuid
-				})
-				.done(function () {
-					app.showNotification("保存成功！");
-				})
-				.error(function (error) {
-					app.showNotification("Error:", JSON.stringify(error));
-				});
-			})
+		    return context.sync().then(function() {
+		        $.post("/template/update.aspx",
+		            {
+		                TemplateContent: bodyXml.value,
+		                ContractTemplateGUID: templateGuid
+		            })
+		            .done(function() {
+		                app.showNotification("保存成功！");
+		            })
+		            .error(function(error) {
+		                app.showNotification("Error:", JSON.stringify(error));
+		            });
+		    });
 		}).catch(function (error) {
 			app.showNotification("Error:", JSON.stringify(error));
 		});

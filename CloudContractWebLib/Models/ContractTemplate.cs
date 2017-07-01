@@ -6,7 +6,7 @@ namespace CloudContractWebLib.Models
     /// 合同模板
     /// </summary>
     [Serializable]
-    public class ContractTemplate : BaseEntity
+    public class ContractTemplate
     {
         /// <summary>
         /// 模板GUID

@@ -61,9 +61,9 @@
     <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Contract.cs" />
     <Compile Include="Models\ContractTemplate.cs" />
+    <Compile Include="Models\ContractTerm.cs" />
     <Compile Include="Models\FieldInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
