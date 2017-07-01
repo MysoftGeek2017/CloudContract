@@ -27,6 +27,8 @@ var app = (function () {
             $('#notification-message-body').text(text);
             $('#notification-message').slideDown('fast');
         };
+
+
     };
 
     return app;

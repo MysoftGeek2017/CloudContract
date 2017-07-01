@@ -52,3 +52,15 @@
         top: 5px;
         cursor: pointer;
     }
+
+.button {
+	display: inline;
+	padding: 5px 10px;
+	border: 1px solid #818285;
+	text-decoration: none;
+}
+
+.button:hover{
+	background-color: #8fb6d7;
+	text-decoration: none;
+}

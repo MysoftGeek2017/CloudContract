@@ -26,7 +26,7 @@
 				.done(function () {
 					app.showNotification("保存成功！");
 				})
-				.error(function(error){
+				.error(function (error) {
 					app.showNotification("Error:", JSON.stringify(error));
 				});
 			})
@@ -44,16 +44,27 @@
 		Word.run(function (context) {
 			var body = context.document.body;
 			var range = context.document.getSelection();
-			// body.insertHtml(template, 'start');
-			range = range.insertText(template, 'start');
-			var xml = range.getHtml();
+
+			//range = range.insertText(template, 'start');
+
+			//var xml = range.getHtml();
+			//return context.sync().then(function () {
+			//	console.log('插入字段' + fieldname);
+			//	// app.showNotification(xml.value);
+			//});
+			var contentControl = range.insertContentControl();
+			contentControl.placeholderText = "点击此处录入" + fieldname;
+			contentControl.tag = fieldname;
+
 			return context.sync().then(function () {
 				console.log('插入字段' + fieldname);
-				// app.showNotification(xml.value);
-			});
+				// app.showNotification("插入字段完成：" + fieldname);
+			})
+
 		}).catch(function (error) {
 			app.showNotification("Error:", JSON.stringify(error));
 		})
 	}
+
 
 })();

@@ -403,6 +403,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="static\NewFolder1\" />
+    <Folder Include="views\NewFolder1\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
