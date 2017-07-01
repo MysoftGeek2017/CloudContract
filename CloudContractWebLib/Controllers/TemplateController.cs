@@ -1,4 +1,6 @@
-﻿using ClownFish.Web;
+﻿using System.Collections.Generic;
+using ClownFish.Data;
+using ClownFish.Web;
 
 namespace CloudContractWebLib.Controllers
 {
@@ -12,5 +14,24 @@ namespace CloudContractWebLib.Controllers
         {
             return new PageResult("~/views/Template/index.cshtml");
         }
-    }
+
+
+		[PageUrl(Url = "/template/create.aspx")]
+		public IActionResult Create()
+		{
+			return new PageResult("~/views/template/create.cshtml");
+		}
+
+
+		[PageUrl(Url = "/template/get-fields.aspx")]
+		public List<string> GetFields()
+		{
+			return CPQuery.Create(@"
+SELECT  field_name_c
+FROM    dbo.data_dict
+WHERE   table_name = 'cb_Contract'
+ORDER BY field_name
+").ToScalarList<string>();
+		}
+	}
 }

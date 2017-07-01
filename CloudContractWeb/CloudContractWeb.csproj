@@ -111,6 +111,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <Content Include="ClownFish.Log.config" />
     <Content Include="LogViewer.ashx" />
@@ -129,7 +130,7 @@
       <DependentUpon>template_list.css</DependentUpon>
     </Content>
     <Content Include="views\Home\index.cshtml" />
-    <Content Include="views\Test\create_template.cshtml" />
+    <Content Include="views\Template\create.cshtml" />
     <Content Include="static\Test\create-template.less" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -395,6 +396,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
