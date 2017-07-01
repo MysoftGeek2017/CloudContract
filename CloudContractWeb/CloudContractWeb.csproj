@@ -405,9 +405,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="static\Contract\" />
-    <Folder Include="static\NewFolder1\" />
     <Folder Include="static\Template\" />
-    <Folder Include="views\NewFolder1\" />  </ItemGroup>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
