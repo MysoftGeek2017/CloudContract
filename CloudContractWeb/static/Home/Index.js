@@ -7,7 +7,7 @@
 		loadTemplates();
 
 		$('#template-list').on('click', '.edit-button', editTemplate);
-		$('#template-list').on('click', '.create-contract', editTemplate);
+		$('#template-list').on('click', '.create-contract', createContract);
 	})
 
 	// 每次加载新页面时均必须运行初始化函数
@@ -24,7 +24,7 @@
 		var target = event.target;
 		var templateName = $(target).closest('li').attr('data-id');
 
-		document.location.href = "/template/edit.aspx?template=" + encodeURI(templateName);
+		document.location.href = "/template/edit.aspx?templateGuid=" + encodeURI(templateName);
 	}
 
 	// 根据模板创建合同
@@ -32,7 +32,7 @@
 		var target = event.target;
 		var templateName = $(target).closest('li').attr('data-id');
 
-		document.location.href = "/contract/addnew.aspx?template=" + encodeURI(templateName);
+		document.location.href = "/contract/addnew.aspx?templateGuid=" + encodeURI(templateName);
 	}
 	
 	function loadTemplates() {
@@ -48,7 +48,7 @@
 	function createTemplateItem(item) {
 		var li = $("<li/>")
 			.addClass('list-group-item')
-			.attr('data-id', item);
+			.attr('data-id', item.ContractTemplateGUID);
 
 		var a = $("<span/>")
 			// .attr("href", "javascript:void 0")
