@@ -121,6 +121,7 @@
     <Content Include="static\Home\Index.min.css">
       <DependentUpon>Index.css</DependentUpon>
     </Content>
+    <Content Include="static\Images\Close.png" />
     <Content Include="static\Template\addnew.js" />
     <Content Include="static\Template\edit.css">
       <DependentUpon>edit.less</DependentUpon>
