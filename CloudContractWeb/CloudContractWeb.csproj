@@ -115,6 +115,13 @@
     <Content Include="packages.config" />
     <Content Include="ClownFish.Log.config" />
     <Content Include="LogViewer.ashx" />
+    <Content Include="static\Contract\edit.css">
+      <DependentUpon>edit.less</DependentUpon>
+    </Content>
+    <Content Include="static\Contract\edit.js" />
+    <Content Include="static\Contract\edit.min.css">
+      <DependentUpon>edit.css</DependentUpon>
+    </Content>
     <Content Include="static\Home\Index.css">
       <DependentUpon>Index.less</DependentUpon>
     </Content>
@@ -159,6 +166,8 @@
     <Content Include="views\Template\addnew.cshtml" />
     <Content Include="static\Template\edit.less" />
     <Content Include="static\Home\Index.less" />
+    <Content Include="views\Contract\edit.cshtml" />
+    <Content Include="static\Contract\edit.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -426,7 +435,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="static\Contract\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

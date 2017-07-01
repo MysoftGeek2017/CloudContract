@@ -62,6 +62,7 @@
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Models\ContractTemplate.cs" />
+    <Compile Include="Models\FieldInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

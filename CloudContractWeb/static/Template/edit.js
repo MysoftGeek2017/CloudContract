@@ -75,9 +75,9 @@
 
 			var li = $("<li/>")
 				.addClass('list-group-item')
-				.attr('data-id', item)
+				.attr('data-id', item.Field)
 				//.attr('title', '插入文档占位符')
-				.text(item);
+				.text(item.Text);
 
 			//var a = $("<a/>")
 			//	.attr("href", "javascript:void 0")
@@ -92,17 +92,18 @@
 	function insertPosition(event) {
 		var target = event.target;
 		var fieldname = $(target).closest('.list-group-item').attr('data-id');
+		var fieldText = $(target).closest('.list-group-item').text();
 
 		Word.run(function (context) {
 			var body = context.document.body;
 			var range = context.document.getSelection();
 
 			var contentControl = range.insertContentControl();
-			contentControl.placeholderText = "点击此处录入" + fieldname;
+			contentControl.placeholderText = "点击此处录入" + fieldText;
 			contentControl.tag = fieldname;
 
 			return context.sync().then(function () {
-				console.log('插入字段' + fieldname);
+				console.log('插入字段' + fieldText);
 			})
 		}).catch(function (error) {
 			app.showNotification("Error:", JSON.stringify(error));

@@ -124,16 +124,16 @@ WHERE ContractTemplateGUID=@templateGuid
 
 		[PageUrl(Url = "/template/get-fields.aspx")]
 		[Action(OutFormat = SerializeFormat.Json, Verb = "POST")]
-		public List<string> GetFields()
+		public List<FieldInfo> GetFields()
 		{
 			using( var scope = ConnectionScope.GetExistOrCreate() ) {
 				return CPQuery.Create(@"
-SELECT  field_name_c
+SELECT  field_name_c Text,field_name Field
 FROM    dbo.data_dict
 WHERE   table_name = 'Geek_Contract'
 ORDER BY field_name
 
-").ToScalarList<string>();
+").ToList<FieldInfo>();
 			}
 		}
 	}
