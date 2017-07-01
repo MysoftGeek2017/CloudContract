@@ -1,40 +1,11 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/views/Shared/_layout.cshtml";
 }
 
-<html>
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <title></title>
-    <script src="~/static/3rd/jquery-1.9.1.js" type="text/javascript"></script>
+<h2>模板名称</h2>
+<input type="text" name="name" id="name" maxlength="128" />
+<div id="toolbar">
+    <a class="glyphicon glyphicon-file" id="btn-save" href="javascript:void(0);" onclick="saveTemplate();">保存模板</a>
+</div>
 
-    <link href="~/static/3rd/Office.css" rel="stylesheet" type="text/css" />
-    <script src="https://appsforoffice.microsoft.com/lib/beta/hosted/office.js" type="text/javascript"></script>
-
-    <!-- 要允许使用 Office.js 的本地引用进行脱机调试，请使用:                        -->
-    <!-- <script src="../../Scripts/Office/MicrosoftAjax.js" type="text/javascript"></script>  -->
-    <!-- <script src="../../Scripts/Office/1/office.js" type="text/javascript"></script>  -->
-
-    <link href="~/static/App.css" rel="stylesheet" type="text/css" />
-    <script src="~/static/App.js" type="text/javascript"></script>
-
-    <script src="~/static/Template/addnew.js" type="text/javascript"></script>
-</head>
-<body>
-    <div id="content-header">
-        <div class="padding">
-            <h1>创建模板</h1>
-        </div>
-    </div>
-    <div id="content-main">
-        <div class="padding">
-            <h2>模板名称</h2>
-            <input type="text" name="name" id="name" maxlength="128" />
-            <div id="toolbar">
-                <a class="glyphicon glyphicon-file" id="btn-save" href="javascript:void(0);" onclick="saveTemplate();">保存模板</a>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+<script src="~/static/Template/addnew.js" type="text/javascript"></script>
