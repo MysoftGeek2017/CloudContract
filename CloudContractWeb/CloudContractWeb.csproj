@@ -111,10 +111,18 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <Content Include="ClownFish.Log.config" />
     <Content Include="LogViewer.ashx" />
     <Content Include="static\Template\addnew.js" />
+    <Content Include="static\Template\edit.css">
+      <DependentUpon>edit.less</DependentUpon>
+    </Content>
+    <Content Include="static\Template\edit.js" />
+    <Content Include="static\Template\edit.min.css">
+      <DependentUpon>edit.css</DependentUpon>
+    </Content>
     <Content Include="static\Test\create-template.css">
       <DependentUpon>create-template.less</DependentUpon>
     </Content>
@@ -130,7 +138,7 @@
       <DependentUpon>template_list.css</DependentUpon>
     </Content>
     <Content Include="views\Home\index.cshtml" />
-    <Content Include="views\Test\create_template.cshtml" />
+    <Content Include="views\Template\edit.cshtml" />
     <Content Include="static\Test\create-template.less" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -142,6 +150,7 @@
     <Content Include="views\Contract\index.cshtml" />
     <Content Include="views\Shared\_layout.cshtml" />
     <Content Include="views\Template\addnew.cshtml" />
+    <Content Include="static\Template\edit.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -397,6 +406,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

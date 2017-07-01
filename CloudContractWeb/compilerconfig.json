@@ -10,5 +10,9 @@
   {
     "outputFile": "static/Tab/Tab.css",
     "inputFile": "static/Tab/Tab.less"
+  },
+  {
+    "outputFile": "static/Template/edit.css",
+    "inputFile": "static/Template/edit.less"
   }
 ]

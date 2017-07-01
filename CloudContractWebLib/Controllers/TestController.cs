@@ -17,11 +17,6 @@ namespace CloudContractWebLib.Controllers
 			return "test";
 		}
 
-		[PageUrl(Url = "/create-template.aspx")]
-		public IActionResult CreateTemplate()
-		{
-			return new PageResult("~/views/Test/create_template.cshtml");
-		}
 
 
 		[PageUrl(Url = "/get-username.aspx")]
