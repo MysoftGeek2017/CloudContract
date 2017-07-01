@@ -152,7 +152,6 @@
     </None>
     <Content Include="views\Test\template_list.cshtml" />
     <Content Include="static\Test\template_list.less" />
-    <Content Include="views\Template\index.cshtml" />
     <Content Include="views\Contract\index.cshtml" />
     <Content Include="views\Shared\_layout.cshtml" />
     <Content Include="views\Template\addnew.cshtml" />
