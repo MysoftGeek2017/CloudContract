@@ -14,5 +14,9 @@
   {
     "outputFile": "static/Template/edit.css",
     "inputFile": "static/Template/edit.less"
+  },
+  {
+    "outputFile": "static/Home/Index.css",
+    "inputFile": "static/Home/Index.less"
   }
 ]

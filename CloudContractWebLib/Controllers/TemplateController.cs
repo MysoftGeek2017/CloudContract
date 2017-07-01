@@ -37,7 +37,7 @@ namespace CloudContractWebLib.Controllers
 		[Action(OutFormat = SerializeFormat.Json, Verb = "POST")]
 		public List<string> GetTemplates()
 		{
-			return new List<string> { "测试模板01" };
+			return new List<string> { "测试模板01", "测试模板02" };
 		}
 
 

@@ -115,6 +115,12 @@
     <Content Include="packages.config" />
     <Content Include="ClownFish.Log.config" />
     <Content Include="LogViewer.ashx" />
+    <Content Include="static\Home\Index.css">
+      <DependentUpon>Index.less</DependentUpon>
+    </Content>
+    <Content Include="static\Home\Index.min.css">
+      <DependentUpon>Index.css</DependentUpon>
+    </Content>
     <Content Include="static\Template\addnew.js" />
     <Content Include="static\Template\edit.css">
       <DependentUpon>edit.less</DependentUpon>
@@ -151,6 +157,7 @@
     <Content Include="views\Shared\_layout.cshtml" />
     <Content Include="views\Template\addnew.cshtml" />
     <Content Include="static\Template\edit.less" />
+    <Content Include="static\Home\Index.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -399,7 +406,6 @@
     <None Include="static\3rd\_references.js" />
     <Content Include="static\App.css" />
     <Content Include="static\App.js" />
-    <Content Include="static\Home\Index.css" />
     <Content Include="static\Home\Index.js" />
     <Content Include="static\3rd\Office.css" />
     <Content Include="static\3rd\OfficeThemes.css" />
