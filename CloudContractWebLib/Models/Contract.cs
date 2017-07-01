@@ -32,5 +32,9 @@ namespace CloudContractWebLib.Models
         /// 合同模板Guid
         /// </summary>
         public Guid ContractTemplateGUID { get; set; }
+        /// <summary>
+        /// 合同内容
+        /// </summary>
+        public string ContractContent { get; set; }
     }
 }
