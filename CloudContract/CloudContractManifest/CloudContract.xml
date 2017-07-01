@@ -12,7 +12,7 @@
   </Hosts>
   <DefaultSettings>
     <!--<SourceLocation DefaultValue="~remoteAppUrl/App/Home/Home.html" />-->
-    <SourceLocation DefaultValue="http://wh-wangy16:8041/index.aspx"/>
+    <SourceLocation DefaultValue="http://localhost:8041/index.aspx"/>
   </DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
 </OfficeApp>
