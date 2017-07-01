@@ -3,6 +3,10 @@
 
     $(function() {
         $("#btn-save").click(saveTemplate);
+
+        $("#btn-return").click(function () {
+            window.location.href = "/index.aspx";
+        });
     });
 
     // 每次加载新页面时均必须运行初始化函数
@@ -16,9 +20,9 @@
 
     function saveTemplate() {
         $.post("/template-save.aspx", { Name: $("#name").val() })
-            .done(function() {
+            .done(function(oid) {
                 app.showNotification("保存成功！");
-                window.location = "/template-index.aspx";
+                window.location = "/template/edit.aspx?templateGuid=" + oid;
             })
             .error(function (error) {
                 var message = error.responseText;

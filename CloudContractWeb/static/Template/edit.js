@@ -7,10 +7,10 @@
 
 		$("#field-list").on('click', '.list-group-item', insertPosition)
 		$("#btn-save").click(save);
-		$("#btn-return").click(function () {
-			app.setContent('');
-			window.location.href = "/index.aspx";
-		})
+	    $("#btn-return").click(function() {
+	        app.setContent('');
+	        window.location.href = "/index.aspx";
+	    });
 	});
 
 	// 每次加载新页面时均必须运行初始化函数
