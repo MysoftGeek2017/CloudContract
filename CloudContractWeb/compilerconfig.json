@@ -6,5 +6,9 @@
   {
     "outputFile": "static/Test/template_list.css",
     "inputFile": "static/Test/template_list.less"
+  },
+  {
+    "outputFile": "static/Tab/Tab.css",
+    "inputFile": "static/Tab/Tab.less"
   }
 ]

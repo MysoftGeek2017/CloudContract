@@ -114,7 +114,6 @@
     <Content Include="packages.config" />
     <Content Include="ClownFish.Log.config" />
     <Content Include="LogViewer.ashx" />
-    <Content Include="static\Template\addnew.js" />
     <Content Include="static\Test\create-template.css">
       <DependentUpon>create-template.less</DependentUpon>
     </Content>
@@ -140,7 +139,7 @@
     <Content Include="static\Test\template_list.less" />
     <Content Include="views\Template\index.cshtml" />
     <Content Include="views\Contract\index.cshtml" />
-    <Content Include="views\Template\addnew.cshtml" />
+    <Content Include="views\Shared\_layout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -407,6 +406,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="static\Contract\" />
+    <Folder Include="static\Template\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
