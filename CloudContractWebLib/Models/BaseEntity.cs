@@ -5,6 +5,7 @@ namespace CloudContractWebLib.Models
     /// <summary>
     /// 实体基类
     /// </summary>
+    [Serializable]
     public abstract class BaseEntity
     {
         /// <summary>

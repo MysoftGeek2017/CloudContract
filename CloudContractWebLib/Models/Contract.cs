@@ -5,6 +5,7 @@ namespace CloudContractWebLib.Models
     /// <summary>
     /// 合同
     /// </summary>
+    [Serializable]
     public class Contract : BaseEntity
     {
         /// <summary>
