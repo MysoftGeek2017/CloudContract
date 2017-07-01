@@ -34,7 +34,7 @@
 		var target = event.target;
 		var templateName = $(target).closest('li').attr('data-id');
 
-		document.location.href = "/contract/addnew.aspx?templateGuid=" + encodeURI(templateName);
+		document.location.href = "/contract/create.aspx?templateGuid=" + encodeURI(templateName);
 	}
 	
 	function loadTemplates() {
