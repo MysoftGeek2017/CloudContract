@@ -147,5 +147,19 @@ ORDER BY field_name
 ").ToList<FieldInfo>();
             }
         }
+
+        [PageUrl(Url = "/template/get-itemfields.aspx")]
+        [Action(OutFormat = SerializeFormat.Json, Verb = "POST")]
+        public List<FieldInfo> GetItemFields()
+        {
+            return new List<FieldInfo>
+            {
+                new FieldInfo {Field = "PerformRemarks", Text = "履约备注"},
+                new FieldInfo {Field = "TechnicRemarks", Text = "技术指标"},
+                new FieldInfo {Field = "RewardRemarks", Text = "奖励说明"},
+                new FieldInfo {Field = "BreachRemarks", Text = "违约责任"},
+                new FieldInfo {Field = "TermRemarks", Text = "条款备注"}
+            };
+        }
     }
 }

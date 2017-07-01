@@ -2,10 +2,12 @@
 	"use strict";
 
 	$(function () {
-		loadFields();
+	    loadFields('/template/get-fields.aspx', 'field-list');
+
+	    loadFields('/template/get-itemfields.aspx', 'itemfield-list');
 		//loadContent();
 
-		$("#field-list").on('click', '.list-group-item', insertPosition)
+	    $("#field-list").on('click', '.list-group-item', insertPosition);
 		$("#btn-save").click(save);
 	    $("#btn-return").click(function() {
 	        app.setContent('');
@@ -47,10 +49,10 @@
 
 
 	// 读取模板字段
-	function loadFields() {
-		$.post('/template/get-fields.aspx')
+	function loadFields(url, divid) {
+		$.post(url)
 			.then(function (data) {
-				showFields(data);
+			    showFields(data, divid);
 			})
 			.fail(function (error) {
 				var message = error.responseText;
@@ -68,8 +70,8 @@
 	}
 
 	// 显示模板字段
-	function showFields(fieldList) {
-		var ul = $("#field-list");
+	function showFields(fieldList, divid) {
+	    var ul = $("#" + divid);
 
 		$.each(fieldList, function (i, item) {
 
