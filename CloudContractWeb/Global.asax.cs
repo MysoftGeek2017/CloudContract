@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using ClownFish.Data;
 
 namespace CloudContractService
 {
@@ -14,6 +15,9 @@ namespace CloudContractService
 		{
 			ClownFish.Data.Initializer.Instance.InitConnection()
 				.CompileAllEntityProxy();
+
+			ConnectionManager.Init();
+
 		}
 
 		protected void Session_Start(object sender, EventArgs e)
