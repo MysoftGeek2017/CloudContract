@@ -20,10 +20,12 @@
 			if (window._contractGuid == '00000000-0000-0000-0000-000000000000') {
 				// 新增模式
 				loadTemplate();
+				$("#contract-terms").hide();
 			}
 			else {
 				// 编辑模式
 				loadContract();
+				
 			}
 		});
 	};
@@ -119,7 +121,7 @@
 					var tag = item.tag;
 					var text = item.text;
 
-					if (tag.startsWith('terms.')) {
+					if (tag.indexOf('terms.') == 0) {
 						var term = {
 							TermToField: tag.substr(6),
 							TermContent: text
@@ -176,8 +178,10 @@
 								terms: terms
 							})
 						})
-					.done(function () {
+					.done(function (id) {
 						app.showNotification("保存成功！");
+
+						window.location.href = '/contract/edit.aspx?contractGuid=' + id;
 					})
 					.error(function (error) {
 						var message = error.responseText;
@@ -211,7 +215,7 @@
 			var li = $("<li/>")
 				.addClass('list-group-item')
 				.attr('data-id', item.ContractTermGUID)
-				//.attr('title', '插入文档占位符')
+				.attr('title', item.CheckContent)
 				.text(item.TermContent);
 
 			if (item.ApproveStatus === '合规') {
@@ -234,8 +238,8 @@
 			ul.append(li);
 		});
 
-		if (isAllSuccess) {
-			$("#btn-save").hide();
-		}
+		//if (isAllSuccess) {
+		//	$("#btn-save").hide();
+		//}
 	}
 }())

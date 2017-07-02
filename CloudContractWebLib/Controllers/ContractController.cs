@@ -111,7 +111,9 @@ INSERT  INTO [dbo].[Geek_Contract]
           [ContractName] ,
           [ContractTemplateGUID] ,
           [ContractAmount],
-		  [ContractContent]
+		  [ContractContent],
+		  [ProjectName],
+		  [SignedDate]
         )
 VALUES  ( @ContractGUID ,
           GETDATE() ,
@@ -126,7 +128,9 @@ VALUES  ( @ContractGUID ,
           @ContractName ,
           @ContractTemplateGUID ,
           @ContractAmount,
-          @ContractContent
+          @ContractContent,
+		  @ProjectName,
+		  @SignedDate
         )";
             }
             else
@@ -141,7 +145,9 @@ SET     [ModifiedTime] = GETDATE() ,
         [ThirtyPattern] = @ThirtyPattern ,
         [ContractName] = @ContractName ,
         [ContractAmount] = @ContractAmount,
-		[ContractContent] = @ContractContent
+		[ContractContent] = @ContractContent,
+		[ProjectName] = @ProjectName,
+		[SignedDate] = @SignedDate
 WHERE   ContractGUID = @ContractGUID";
             }
 
