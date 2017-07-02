@@ -3,7 +3,9 @@
 var app = (function () {
 	"use strict";
 
-	var app = {};
+	var app = {
+		setContent: function () { }
+	};
 
 	// 通用初始化函数(每页上都要调用)
 	app.initialize = function () {

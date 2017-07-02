@@ -137,7 +137,7 @@ WHERE ContractTemplateGUID=@templateGuid
             using (var scope = ConnectionScope.GetExistOrCreate())
             {
                 return CPQuery.Create(@"
-SELECT  field_name_c Text,field_name Field
+SELECT  field_name_c Text, field_name Field
 FROM    dbo.data_dict
 WHERE   table_name = 'Geek_Contract'
         AND field_name NOT IN ( 'ApproverGUID','ApproverName','ApproveStatus','ApproveTime', 'CreatedGUID', 'ContractTemplateGUID', 'ContractGUID', 'CreatedTime', 'CreatedName',
@@ -154,11 +154,11 @@ ORDER BY field_name
         {
             return new List<FieldInfo>
             {
-                new FieldInfo {Field = "PerformRemarks", Text = "履约备注"},
-                new FieldInfo {Field = "TechnicRemarks", Text = "技术指标"},
-                new FieldInfo {Field = "RewardRemarks", Text = "奖励说明"},
-                new FieldInfo {Field = "BreachRemarks", Text = "违约责任"},
-                new FieldInfo {Field = "TermRemarks", Text = "条款备注"}
+                new FieldInfo {Field = "terms.PerformRemarks", Text = "履约备注"},
+                new FieldInfo {Field = "terms.TechnicRemarks", Text = "技术指标"},
+                new FieldInfo {Field = "terms.RewardRemarks", Text = "奖励说明"},
+                new FieldInfo {Field = "terms.BreachRemarks", Text = "违约责任"},
+                new FieldInfo {Field = "terms.TermRemarks", Text = "条款备注"}
             };
         }
     }

@@ -74,7 +74,10 @@
 
 	// 从内容中读取到全部的占位符的值
 	function getData(callback) {
+		// 合同主要信息
 		var value = {};
+		// 合同条款
+		var terms = [];
 		Word.run(function (context) {
 			var body = context.document.body;
 			var allContentControl = body.contentControls;
@@ -85,11 +88,20 @@
 				$.each(allContentControl.items, function (i, item) {
 					var tag = item.tag;
 					var text = item.text;
-					value[tag] = text;
+
+					if (tag.startsWith('terms.')) {
+						terms.push({
+							TermToField: tag.substr(6),
+							TermContent: text
+						});
+					}
+					else {
+						value[tag] = text;
+					}
 				});
 
 				if (typeof callback === 'function')
-					callback(value);
+					callback(value, terms);
 			});
 		}).catch(function (error) {
 			app.showNotification("Error:", JSON.stringify(error));
@@ -97,7 +109,7 @@
 	}
 
 	function save() {
-		getData(function (data) {
+		getData(function (data, terms) {
 			data.ContractGUID = window._contractGuid;
 
 
@@ -110,7 +122,13 @@
 				return context.sync().then(function () {
 					data.ContractContent = bodyXml.value;
 
-					$.post("/contract/save.aspx", data)
+					$.post("/contract/save.aspx",
+						{
+							data: JSON.stringify({
+								contract: data,
+								terms: terms
+							})
+						})
 					.done(function () {
 						app.showNotification("保存成功！");
 					})
