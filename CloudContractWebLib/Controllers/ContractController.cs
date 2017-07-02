@@ -163,7 +163,7 @@ WHERE   ContractGUID = @ContractGUID";
         }
 
         [PageUrl(Url = "/contract/get-terms.aspx")]
-        [Action(Verb = "POST")]
+        [Action(OutFormat = SerializeFormat.Json, Verb = "POST")]
         public List<ContractTerm> GetTermList(Guid contractGuid)
         {
             using (var scope = ConnectionScope.GetExistOrCreate())
