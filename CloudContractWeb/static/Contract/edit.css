@@ -12,6 +12,9 @@
 #field-list .list-group-item:hover {
   background-color: #8abbe5;
 }
+#term-list .list-group-item {
+  cursor: pointer;
+}
 #content-footer .padding {
   text-align: right;
 }

@@ -10,6 +10,11 @@
 		$("#btn-refresh").click(function () {
 			loadTerms();
 		})
+		//loadTermDefine().then(loadTerms);
+
+		$("#term-list").on('click', '.list-group-item', function (event) {
+			gotoTermPosition($(event.target).attr('data-field'));
+		})
 	});
 
 	// 每次加载新页面时均必须运行初始化函数
@@ -25,10 +30,27 @@
 			else {
 				// 编辑模式
 				loadContract();
-				
+
 			}
 		});
 	};
+
+	// 跳转到文档条款位置
+	function gotoTermPosition(field) {
+		//app.showNotification(field);
+		Word.run(function (context) {
+			var body = context.document.body;
+			var allContentControl = body.contentControls;
+			var contentControl = allContentControl.getByTag('terms.' + field);
+			context.load(contentControl, 'items');
+
+			return context.sync().then(function () {
+				contentControl.items[0].select();
+			})
+		}).catch(function (error) {
+			app.showNotification("Error:", JSON.stringify(error));
+		});
+	}
 
 	// 读取模板内容
 	function loadTemplate() {
@@ -76,7 +98,15 @@
 
 				app.showNotification("错误:", message);
 			});
-		loadTerms();
+
+		loadTermDefine().then(loadTerms);
+	}
+
+	function loadTermDefine() {
+		return $.post('/template/get-itemfields.aspx')
+			.then(function (data) {
+				window._termFields = data;
+			})
 	}
 
 	function loadTerms() {
@@ -203,6 +233,20 @@
 		});
 	}
 
+	function getTermText(field) {
+		var found;
+		$.each(window._termFields, function (i, item) {
+			var itemfield = item.Field.substr(6);
+			if (itemfield == field) {
+				found = item;
+			}
+		})
+		
+		if (found)
+			return found.Text;
+		return '';
+	}
+
 	// 显示合同条款
 	function showTerms(fieldList, divid) {
 		var ul = $("#" + divid);
@@ -215,18 +259,27 @@
 			var li = $("<li/>")
 				.addClass('list-group-item')
 				.attr('data-id', item.ContractTermGUID)
-				.attr('title', item.CheckContent)
-				.text(item.TermContent);
+				.attr('data-field', item.TermToField)
+				.attr('title', item.CheckContent);
+
+			var span = $('<span class="label"></span>')
+				.text(getTermText(item.TermToField))
+				.appendTo(li);
+
+			li.append(' ' + item.TermContent);
 
 			if (item.ApproveStatus === '合规') {
 				li.addClass('success');
+				span.addClass('label-success');
 			}
 			else if (item.ApproveStatus === '违规') {
 				li.addClass('warning');
+				span.addClass('label-danger');
 				isAllSuccess = false;
 			}
 			else {
 				li.addClass('default');
+				span.addClass('label-default');
 				isAllSuccess = false;
 			}
 
