@@ -73,8 +73,7 @@ WHERE   ContractGUID=@ContractGUID", new { ContractGUID = contractGuid }).ToSing
         /// <summary>
         /// 合同保存
         /// </summary>
-        /// <param name="contract">合同</param>
-        /// <param name="terms">合同条款列表</param>
+        /// <param name="data">合同</param>
         [PageUrl(Url = "/contract/save.aspx")]
         [Action(Verb = "POST")]
         public Guid Save(string data)
@@ -227,7 +226,11 @@ UPDATE  [dbo].[Geek_ContractTerm]
 SET     [ModifiedTime] = GETDATE() ,
         [ModifiedGUID] = '4230BC6E-69E6-46A9-A39E-B929A06A84E8' ,
         [ModifiedName] = '系统管理员' ,
-        [TermContent] = @TermContent
+        [TermContent] = @TermContent ,
+        [ApproveTime] = NULL ,
+        [ApproveStatus] = NULL ,
+        [ApproverGUID] = NULL ,
+        [ApproverName] = NULL
 WHERE   ContractTermGUID = @ContractTermGUID";
             }
 
