@@ -232,11 +232,7 @@ UPDATE  [dbo].[Geek_ContractTerm]
 SET     [ModifiedTime] = GETDATE() ,
         [ModifiedGUID] = '4230BC6E-69E6-46A9-A39E-B929A06A84E8' ,
         [ModifiedName] = '系统管理员' ,
-        [TermContent] = @TermContent ,
-        [ApproveTime] = NULL ,
-        [ApproveStatus] = NULL ,
-        [ApproverGUID] = NULL ,
-        [ApproverName] = NULL
+        [TermContent] = @TermContent 
 WHERE   ContractTermGUID = @ContractTermGUID";
             }
 
