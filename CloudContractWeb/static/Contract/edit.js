@@ -93,7 +93,10 @@
 
 	// 从内容中读取到全部的占位符的值
 	function getData(callback) {
+		// 合同主要信息
 		var value = {};
+		// 合同条款
+		var terms = [];
 		Word.run(function (context) {
 			var body = context.document.body;
 			var allContentControl = body.contentControls;
@@ -104,11 +107,20 @@
 				$.each(allContentControl.items, function (i, item) {
 					var tag = item.tag;
 					var text = item.text;
-					value[tag] = text;
+
+					if (tag.startsWith('terms.')) {
+						terms.push({
+							TermToField: tag.substr(6),
+							TermContent: text
+						});
+					}
+					else {
+						value[tag] = text;
+					}
 				});
 
 				if (typeof callback === 'function')
-					callback(value);
+					callback(value, terms);
 			});
 		}).catch(function (error) {
 			app.showNotification("Error:", JSON.stringify(error));
@@ -116,8 +128,8 @@
 	}
 
 	function save() {
-	    getData(function(data) {
-	        data.ContractGUID = window._contractGuid;
+		getData(function (data, terms) {
+			data.ContractGUID = window._contractGuid;
 
 
 	        var contractGuid = window.QueryString.GetValue('ContractGuid');
@@ -129,12 +141,18 @@
 	            return context.sync().then(function() {
 	                data.ContractContent = bodyXml.value;
 
-	                $.post("/contract/save.aspx", data)
-	                    .done(function() {
-	                        app.showNotification("保存成功！");
-	                    })
-	                    .error(function(error) {
-	                        var message = error.responseText;
+					$.post("/contract/save.aspx",
+						{
+							data: JSON.stringify({
+								contract: data,
+								terms: terms
+							})
+						})
+					.done(function () {
+						app.showNotification("保存成功！");
+					})
+					.error(function (error) {
+						var message = error.responseText;
 
 	                        if (message.indexOf("<title>") > -1) {
 	                            message = message.split("<title>")[1];

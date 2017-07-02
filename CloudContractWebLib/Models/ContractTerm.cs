@@ -38,10 +38,10 @@ namespace CloudContractWebLib.Models
         /// </summary>
         public string ApproverName { get; set; }
 
-        /// <summary>
-        /// 审批时间
-        /// </summary>
-        public DateTime ApproveTime { get; set; }
+        ///// <summary>
+        ///// 审批时间
+        ///// </summary>
+        //public DateTime ApproveTime { get; set; }
 
         /// <summary>
         /// 审批意见
