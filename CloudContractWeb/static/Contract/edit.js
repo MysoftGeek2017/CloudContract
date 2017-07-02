@@ -7,6 +7,9 @@
 	        app.setContent('');
 	        window.location.href = "/index.aspx";
 	    });
+	    $("#btn-refresh").click(function () {
+	    	loadTerms();
+	    })
 	});
 
 	// 每次加载新页面时均必须运行初始化函数
@@ -70,24 +73,30 @@
 
 				app.showNotification("错误:", message);
 			});
+		loadTerms();
+	}
 
-	    $.post('/contract/get-terms.aspx',
+	function loadTerms() {
+
+
+		var contractGuid = window._contractGuid;
+		$.post('/contract/get-terms.aspx',
 			{ contractGuid: contractGuid })
 			.then(function (data) {
-			    showTerms(data, "term-list");
-	        })
+				showTerms(data, "term-list");
+			})
 			.fail(function (error) {
-			    var message = error.responseText;
+				var message = error.responseText;
 
-			    if (message.indexOf("<title>") > -1) {
-			        message = message.split("<title>")[1];
-			    }
+				if (message.indexOf("<title>") > -1) {
+					message = message.split("<title>")[1];
+				}
 
-			    if (message.indexOf("</title>") > -1) {
-			        message = message.split("</title>")[0];
-			    }
+				if (message.indexOf("</title>") > -1) {
+					message = message.split("</title>")[0];
+				}
 
-			    app.showNotification("错误:", message);
+				app.showNotification("错误:", message);
 			});
 	}
 
@@ -173,15 +182,30 @@
 
     // 显示合同条款
 	function showTerms(fieldList, divid) {
-	    var ul = $("#" + divid);
+		var ul = $("#" + divid);
+		ul.empty();
+
+		var isAllSuccess = true;
 
 	    $.each(fieldList, function (i, item) {
 
 	        var li = $("<li/>")
 				.addClass('list-group-item')
-				.attr('data-id', item.Field)
+				.attr('data-id', item.ContractTermGUID)
 				//.attr('title', '插入文档占位符')
-				.text(item.Text);
+				.text(item.TermContent);
+
+	        if (item.ApproveStatus === '合规') {
+	        	li.addClass('success');
+	        }
+	        else if (item.ApproveStatus === '违规') {
+	        	li.addClass('warning');
+	        	isAllSuccess = false;
+	        }
+	        else {
+	        	li.addClass('default');
+	        	isAllSuccess = false;
+	        }
 
 	        //var a = $("<a/>")
 	        //	.attr("href", "javascript:void 0")
@@ -190,5 +214,9 @@
 
 	        ul.append(li);
 	    });
+
+	    if (isAllSuccess) {
+	    	$("#btn-save").hide();
+	    }
 	}
 }())
