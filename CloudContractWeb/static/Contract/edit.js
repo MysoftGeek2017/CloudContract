@@ -59,6 +59,7 @@
 			{ contractGuid: contractGuid })
 			.then(function (data) {
 				app.setContent(data.ContractContent);
+				window._templateGuid = data.ContractTemplateGUID;
 			})
 			.fail(function (error) {
 				var message = error.responseText;
@@ -139,7 +140,7 @@
 	function save() {
 		getData(function (data, terms) {
 			data.ContractGUID = window._contractGuid;
-
+			data.ContractTemplateGUID = window._templateGuid;
 
 	        var contractGuid = window.QueryString.GetValue('ContractGuid');
 	        Word.run(function(context) {

@@ -30,3 +30,21 @@
   top: -15px;
   cursor: pointer;
 }
+.legend-panel {
+  text-align: center;
+}
+.legend-panel .legend {
+  display: inline-block;
+  margin-left: 10px;
+  width: 10px;
+  height: 10px;
+}
+.legend-panel .default {
+  background-color: #808080;
+}
+.legend-panel .warning {
+  background-color: #ff0000;
+}
+.legend-panel .success {
+  background-color: #0b9405;
+}

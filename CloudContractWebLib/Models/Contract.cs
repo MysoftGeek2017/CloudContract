@@ -36,7 +36,7 @@ namespace CloudContractWebLib.Models
 		/// <summary>
 		/// 合同金额
 		/// </summary>
-		public decimal ContractAmount { get; set; }
+		public decimal? ContractAmount { get; set; }
 
         /// <summary>
         /// 合同内容

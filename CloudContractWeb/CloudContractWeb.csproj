@@ -168,6 +168,7 @@
     <Content Include="static\Home\Index.less" />
     <Content Include="views\Contract\edit.cshtml" />
     <Content Include="static\Contract\edit.less" />
+    <None Include="Properties\PublishProfiles\本机发布.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
