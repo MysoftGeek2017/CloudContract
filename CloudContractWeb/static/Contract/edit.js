@@ -3,13 +3,13 @@
 
 	$(function () {
 		$("#btn-save").click(save);
-	    $("#btn-return").click(function() {
-	        app.setContent('');
-	        window.location.href = "/index.aspx";
-	    });
-	    $("#btn-refresh").click(function () {
-	    	loadTerms();
-	    })
+		$("#btn-return").click(function () {
+			app.setContent('');
+			window.location.href = "/index.aspx";
+		});
+		$("#btn-refresh").click(function () {
+			loadTerms();
+		})
 	});
 
 	// 每次加载新页面时均必须运行初始化函数
@@ -85,6 +85,7 @@
 			{ contractGuid: contractGuid })
 			.then(function (data) {
 				showTerms(data, "term-list");
+				window._terms = data;
 			})
 			.fail(function (error) {
 				var message = error.responseText;
@@ -119,10 +120,12 @@
 					var text = item.text;
 
 					if (tag.startsWith('terms.')) {
-						terms.push({
+						var term = {
 							TermToField: tag.substr(6),
 							TermContent: text
-						});
+						};
+						term = setTermInfo(term);
+						terms.push(term);
 					}
 					else {
 						value[tag] = text;
@@ -137,19 +140,34 @@
 		});
 	}
 
+	function setTermInfo(term) {
+		if (window._terms == undefined)
+			return term;
+
+		var found = undefined;
+		$.each(window._terms, function (i, item) {
+			if (item.TermToField == term.TermToField) {
+				item.TermContent = term.TermContent;
+				found = item;
+			}
+		});
+
+		return found || term;
+	}
+
 	function save() {
 		getData(function (data, terms) {
 			data.ContractGUID = window._contractGuid;
 			data.ContractTemplateGUID = window._templateGuid;
 
-	        var contractGuid = window.QueryString.GetValue('ContractGuid');
-	        Word.run(function(context) {
-	            var body = context.document.body;
-	            var bodyXml = body.getOoxml();
+			var contractGuid = window.QueryString.GetValue('ContractGuid');
+			Word.run(function (context) {
+				var body = context.document.body;
+				var bodyXml = body.getOoxml();
 
 
-	            return context.sync().then(function() {
-	                data.ContractContent = bodyXml.value;
+				return context.sync().then(function () {
+					data.ContractContent = bodyXml.value;
 
 					$.post("/contract/save.aspx",
 						{
@@ -164,60 +182,60 @@
 					.error(function (error) {
 						var message = error.responseText;
 
-	                        if (message.indexOf("<title>") > -1) {
-	                            message = message.split("<title>")[1];
-	                        }
+						if (message.indexOf("<title>") > -1) {
+							message = message.split("<title>")[1];
+						}
 
-	                        if (message.indexOf("</title>") > -1) {
-	                            message = message.split("</title>")[0];
-	                        }
+						if (message.indexOf("</title>") > -1) {
+							message = message.split("</title>")[0];
+						}
 
-	                        app.showNotification("错误:", message);
-	                    });
-	            });
-	        }).catch(function(error) {
-	            app.showNotification("Error:", JSON.stringify(error));
-	        });
-	    });
+						app.showNotification("错误:", message);
+					});
+				});
+			}).catch(function (error) {
+				app.showNotification("Error:", JSON.stringify(error));
+			});
+		});
 	}
 
-    // 显示合同条款
+	// 显示合同条款
 	function showTerms(fieldList, divid) {
 		var ul = $("#" + divid);
 		ul.empty();
 
 		var isAllSuccess = true;
 
-	    $.each(fieldList, function (i, item) {
+		$.each(fieldList, function (i, item) {
 
-	        var li = $("<li/>")
+			var li = $("<li/>")
 				.addClass('list-group-item')
 				.attr('data-id', item.ContractTermGUID)
 				//.attr('title', '插入文档占位符')
 				.text(item.TermContent);
 
-	        if (item.ApproveStatus === '合规') {
-	        	li.addClass('success');
-	        }
-	        else if (item.ApproveStatus === '违规') {
-	        	li.addClass('warning');
-	        	isAllSuccess = false;
-	        }
-	        else {
-	        	li.addClass('default');
-	        	isAllSuccess = false;
-	        }
+			if (item.ApproveStatus === '合规') {
+				li.addClass('success');
+			}
+			else if (item.ApproveStatus === '违规') {
+				li.addClass('warning');
+				isAllSuccess = false;
+			}
+			else {
+				li.addClass('default');
+				isAllSuccess = false;
+			}
 
-	        //var a = $("<a/>")
-	        //	.attr("href", "javascript:void 0")
-	        //	.text(item)
-	        //	.appendTo(li);
+			//var a = $("<a/>")
+			//	.attr("href", "javascript:void 0")
+			//	.text(item)
+			//	.appendTo(li);
 
-	        ul.append(li);
-	    });
+			ul.append(li);
+		});
 
-	    if (isAllSuccess) {
-	    	$("#btn-save").hide();
-	    }
+		if (isAllSuccess) {
+			$("#btn-save").hide();
+		}
 	}
 }())

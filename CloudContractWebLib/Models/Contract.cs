@@ -33,14 +33,24 @@ namespace CloudContractWebLib.Models
         /// </summary>
         public Guid ContractTemplateGUID { get; set; }
 
-		/// <summary>
-		/// 合同金额
-		/// </summary>
-		public decimal? ContractAmount { get; set; }
+        /// <summary>
+        /// 合同金额
+        /// </summary>
+		public decimal ContractAmount { get; set; }
 
         /// <summary>
         /// 合同内容
         /// </summary>
         public string ContractContent { get; set; }
+
+        /// <summary>
+        /// 分期名称
+        /// </summary>
+        public string ProjectName { get; set; }
+
+        /// <summary>
+        /// 签订日期
+        /// </summary>
+        public DateTime? SignedDate { get; set; }
     }
 }
