@@ -3,10 +3,10 @@
 
 	$(function () {
 		$("#btn-save").click(save);
-		$("#btn-return").click(function () {
-			app.setContent('');
-			window.location.href = "/index.aspx";
-		})
+	    $("#btn-return").click(function() {
+	        app.setContent('');
+	        window.location.href = "/index.aspx";
+	    });
 	});
 
 	// 每次加载新页面时均必须运行初始化函数
@@ -70,6 +70,25 @@
 
 				app.showNotification("错误:", message);
 			});
+
+	    $.post('/contract/get-terms.aspx',
+			{ contractGuid: contractGuid })
+			.then(function (data) {
+			    showTerms(data, "term-list");
+	        })
+			.fail(function (error) {
+			    var message = error.responseText;
+
+			    if (message.indexOf("<title>") > -1) {
+			        message = message.split("<title>")[1];
+			    }
+
+			    if (message.indexOf("</title>") > -1) {
+			        message = message.split("</title>")[0];
+			    }
+
+			    app.showNotification("错误:", message);
+			});
 	}
 
 	// 从内容中读取到全部的占位符的值
@@ -97,40 +116,61 @@
 	}
 
 	function save() {
-		getData(function (data) {
-			data.ContractGUID = window._contractGuid;
+	    getData(function(data) {
+	        data.ContractGUID = window._contractGuid;
 
 
-			var contractGuid = window.QueryString.GetValue('ContractGuid');
-			Word.run(function (context) {
-				var body = context.document.body;
-				var bodyXml = body.getOoxml();
+	        var contractGuid = window.QueryString.GetValue('ContractGuid');
+	        Word.run(function(context) {
+	            var body = context.document.body;
+	            var bodyXml = body.getOoxml();
 
 
-				return context.sync().then(function () {
-					data.ContractContent = bodyXml.value;
+	            return context.sync().then(function() {
+	                data.ContractContent = bodyXml.value;
 
-					$.post("/contract/save.aspx", data)
-					.done(function () {
-						app.showNotification("保存成功！");
-					})
-					.error(function (error) {
-						var message = error.responseText;
+	                $.post("/contract/save.aspx", data)
+	                    .done(function() {
+	                        app.showNotification("保存成功！");
+	                    })
+	                    .error(function(error) {
+	                        var message = error.responseText;
 
-						if (message.indexOf("<title>") > -1) {
-							message = message.split("<title>")[1];
-						}
+	                        if (message.indexOf("<title>") > -1) {
+	                            message = message.split("<title>")[1];
+	                        }
 
-						if (message.indexOf("</title>") > -1) {
-							message = message.split("</title>")[0];
-						}
+	                        if (message.indexOf("</title>") > -1) {
+	                            message = message.split("</title>")[0];
+	                        }
 
-						app.showNotification("错误:", message);
-					});
-				})
-			}).catch(function (error) {
-				app.showNotification("Error:", JSON.stringify(error));
-			});
-		})
+	                        app.showNotification("错误:", message);
+	                    });
+	            });
+	        }).catch(function(error) {
+	            app.showNotification("Error:", JSON.stringify(error));
+	        });
+	    });
+	}
+
+    // 显示合同条款
+	function showTerms(fieldList, divid) {
+	    var ul = $("#" + divid);
+
+	    $.each(fieldList, function (i, item) {
+
+	        var li = $("<li/>")
+				.addClass('list-group-item')
+				.attr('data-id', item.Field)
+				//.attr('title', '插入文档占位符')
+				.text(item.Text);
+
+	        //var a = $("<a/>")
+	        //	.attr("href", "javascript:void 0")
+	        //	.text(item)
+	        //	.appendTo(li);
+
+	        ul.append(li);
+	    });
 	}
 }())

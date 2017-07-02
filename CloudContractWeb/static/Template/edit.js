@@ -98,21 +98,21 @@
 		var fieldname = $(target).closest('.list-group-item').attr('data-id');
 		var fieldText = $(target).closest('.list-group-item').text();
 
-		Word.run(function (context) {
-			var body = context.document.body;
-			var range = context.document.getSelection();
+	    Word.run(function(context) {
+	        var body = context.document.body;
+	        var range = context.document.getSelection();
 
-			var contentControl = range.insertContentControl();
-			contentControl.placeholderText = "点击此处录入" + fieldText;
-			contentControl.tag = fieldname;
-			contentControl.title = fieldText;
+	        var contentControl = range.insertContentControl();
+	        contentControl.placeholderText = "点击此处录入" + fieldText;
+	        contentControl.tag = fieldname;
+	        contentControl.title = fieldText;
 
-			return context.sync().then(function () {
-				console.log('插入字段' + fieldText);
-			})
-		}).catch(function (error) {
-			app.showNotification("Error:", JSON.stringify(error));
-		})
+	        return context.sync().then(function() {
+	            console.log('插入字段' + fieldText);
+	        });
+	    }).catch(function(error) {
+	        app.showNotification("Error:", JSON.stringify(error));
+	    });
 	}
 
 	function save() {
@@ -121,28 +121,29 @@
 			var body = context.document.body;
 			var bodyXml = body.getOoxml();
 
-			return context.sync().then(function () {
-				$.post("/template/update.aspx", {
-					TemplateContent: bodyXml.value,
-					ContractTemplateGUID: templateGuid
-				})
-				.done(function () {
-					app.showNotification("保存成功！");
-				})
-				.error(function (error) {
-					var message = error.responseText;
+		    return context.sync().then(function() {
+		        $.post("/template/update.aspx",
+		            {
+		                TemplateContent: bodyXml.value,
+		                ContractTemplateGUID: templateGuid
+		            })
+		            .done(function() {
+		                app.showNotification("保存成功！");
+		            })
+		            .error(function(error) {
+		                var message = error.responseText;
 
-					if (message.indexOf("<title>") > -1) {
-						message = message.split("<title>")[1];
-					}
+		                if (message.indexOf("<title>") > -1) {
+		                    message = message.split("<title>")[1];
+		                }
 
-					if (message.indexOf("</title>") > -1) {
-						message = message.split("</title>")[0];
-					}
+		                if (message.indexOf("</title>") > -1) {
+		                    message = message.split("</title>")[0];
+		                }
 
-					app.showNotification("错误:", message);
-				});
-			})
+		                app.showNotification("错误:", message);
+		            });
+		    });
 		}).catch(function (error) {
 			app.showNotification("Error:", JSON.stringify(error));
 		});

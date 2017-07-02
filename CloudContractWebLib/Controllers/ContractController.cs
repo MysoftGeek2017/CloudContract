@@ -152,6 +152,23 @@ WHERE   ContractGUID = @ContractGUID";
             return contract.ContractGUID;
         }
 
+        [PageUrl(Url = "/contract/get-terms.aspx")]
+        [Action(Verb = "POST")]
+        public List<ContractTerm> GetTermList(Guid contractGuid)
+        {
+            return CPQuery.Create(@"
+SELECT  ContractTermGUID ,
+        ApproveTime ,
+        ApproveStatus ,
+        ApproverGUID ,
+        ApproverName ,
+        TermToField ,
+        TermContent ,
+        CheckContent
+FROM    dbo.[Geek_ContractTerm]
+WHERE   ContractGuid = @ContractGuid", new { ContractGuid = contractGuid }).ToList<ContractTerm>();
+        }
+
         /// <summary>
         /// 保存合同条款
         /// </summary>
